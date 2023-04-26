@@ -77,4 +77,9 @@
         if (event.code === "ArrowUp" && direction !== "down") direction = "up";
         if (event.code === "ArrowDown" && direction !== "up") direction = "down";
         if (event.code === "ArrowLeft" && direction !== "right") direction = "left";
-        if (event.code === "ArrowRight" && direction !==
+        if (event.code === "ArrowRight" && direction !== "left") direction = "right";
+      });
+    </script>
+    <div id="score">Score: 0</div>
+  </body>
+</html>
