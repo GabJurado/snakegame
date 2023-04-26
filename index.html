@@ -9,11 +9,11 @@
     </style>
   </head>
   <body>
-    <canvas id="gameCanvas"></canvas>
+    <canvas id="gameCanvas" width="400" height="400"></canvas>
     <script>
       const canvas = document.getElementById("gameCanvas");
       const ctx = canvas.getContext("2d");
-      const blockSize = 30;
+      const blockSize = 20;
       let snake = [
         { x: 10, y: 10 },
         { x: 10, y: 11 },
@@ -77,9 +77,4 @@
         if (event.code === "ArrowUp" && direction !== "down") direction = "up";
         if (event.code === "ArrowDown" && direction !== "up") direction = "down";
         if (event.code === "ArrowLeft" && direction !== "right") direction = "left";
-        if (event.code === "ArrowRight" && direction !== "left") direction = "right";
-      });
-    </script>
-    <div id="score">Score: 0</div>
-  </body>
-</html>
+        if (event.code === "ArrowRight" && direction !==
