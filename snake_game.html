@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Snake Game</title>
+    <style>
+      canvas {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="gameCanvas"></canvas>
+    <script>
+      const canvas = document.getElementById("gameCanvas");
+      const ctx = canvas.getContext("2d");
+      const blockSize = 10;
+      let snake = [
+        { x: 10, y: 10 },
+        { x: 10, y: 11 },
+        { x: 10, y: 12 },
+      ];
+      let food = { x: 5, y: 5 };
+      let score = 0;
+      let direction = "right";
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Draw snake
+        ctx.fillStyle = "green";
+        snake.forEach((block) => {
+          ctx.fillRect(block.x * blockSize, block.y * blockSize, blockSize, blockSize);
+        });
+
+        // Draw food
+        ctx.fillStyle = "red";
+        ctx.fillRect(food.x * blockSize, food.y * blockSize, blockSize, blockSize);
+
+        // Move snake
+        let head = { x: snake[0].x, y: snake[0].y };
+        if (direction === "up") head.y--;
+        if (direction === "down") head.y++;
+        if (direction === "left") head.x--;
+        if (direction === "right") head.x++;
+        snake.unshift(head);
+
+        // Check for collision with food
+        if (head.x === food.x && head.y === food.y) {
+          food.x = Math.floor(Math.random() * canvas.width / blockSize);
+          food.y = Math.floor(Math.random() * canvas.height / blockSize);
+          score++;
+        } else {
+          snake.pop();
+        }
+
+        // Check for collision with walls or self
+        if (head.x < 0 || head.x >= canvas.width / blockSize || head.y < 0 || head.y >= canvas.height / blockSize) {
+          clearInterval(gameLoop);
+          alert("Game over!");
+        }
+        for (let i = 1; i < snake.length; i++) {
+          if (head.x === snake[i].x && head.y === snake[i].y) {
+            clearInterval(gameLoop);
+            alert("Game over!");
+          }
+        }
+
+        // Update score
+        document.getElementById("score").innerHTML = "Score: " + score;
+      }
+
+      // Start game loop
+      const gameLoop = setInterval(draw, 100);
+
+      // Handle keyboard input
+      document.addEventListener("keydown", (event) => {
+        if (event.code === "ArrowUp" && direction !== "down") direction = "up";
+        if (event.code === "ArrowDown" && direction !== "up") direction = "down";
+        if (event.code === "ArrowLeft" && direction !== "right") direction = "left";
+        if (event.code === "ArrowRight" && direction !== "left") direction = "right";
+      });
+    </script>
+    <div id="score">Score: 0</div>
+  </body>
+</html>
